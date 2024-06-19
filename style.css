@@ -361,7 +361,7 @@ span{
 .skills-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: (4,1fr);  
+    grid-template-rows: (5,1fr);  
     gap: 1rem;
 }
 .skills-box {
