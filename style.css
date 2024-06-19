@@ -538,7 +538,7 @@ span{
     }
     .skills-container{
         padding-bottom: 7rem;
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(1, 1fr); 
         margin: 0 5rem;
     }
 }
@@ -567,7 +567,7 @@ span{
         padding-bottom: 7rem;
     }
     .highlights .wrapper{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         
     }
     .contact form{
