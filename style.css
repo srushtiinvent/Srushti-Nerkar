@@ -267,35 +267,47 @@ span{
 .projects h2{
     margin-bottom: 5rem;
 }
+
+/* ==========================================================================
+   EDITED TIMELINE CODE START
+   ========================================================================== */
 .timeline-items{
     max-width: 1200px;
     margin: auto;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; 
     position: relative;
+    width: 100%;
 }
 .timeline-items::before {
     content: "";
     position: absolute;
-    width: 5px;
-    height: 100%; /* Stretch the line to the full height of the timeline */
+    width: 4px;
+    height: 100%; 
     background-color: var(--main-color);
-    left: calc(50% - 1px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
 }
 .timeline-item{
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 .timeline-item:last-child{
     margin-bottom: 0;
 }
 .timeline-item:nth-child(odd){
-    padding-right: calc(50% + 30px);
-    text-align: right;
+    align-items: flex-end;
+    padding-right: calc(50% + 45px);
+    box-sizing: border-box;
 }
 .timeline-item:nth-child(even){
-    padding-left: calc(50% + 30px);
+    align-items: flex-start;
+    padding-left: calc(50% + 45px);
+    box-sizing: border-box;
 }
 .timeline-dot{
     height: 21px;
@@ -304,41 +316,71 @@ span{
     box-shadow: 0 0 25px var(--main-color),
                 0 0 50px var(--main-color);
     position: absolute;
-    left: calc(50% - 8px);
+    left: 50%;
+    top: 15px;
+    transform: translateX(-50%);
     border-radius: 50%;
-    top: 10px;
+    z-index: 2;
 }
 .timeline-date{
     font-size: 30px;
     font-weight: 800;
     color: white;
-    margin: 6px 0 15px;
+    margin: 0 0 15px 0;
+}
+.timeline-item:nth-child(odd) .timeline-date {
+    text-align: right;
+    width: 100%;
+}
+.timeline-item:nth-child(even) .timeline-date {
+    text-align: left;
+    width: 100%;
 }
 .timeline-content{
     background-color: var(--bg-color);
     border: 3px solid var(--main-color);
-    padding: 30px 50px;
-    border-radius: 4rem;
+    padding: 30px 40px;
+    border-radius: 2.5rem; 
     box-shadow: 0 0 10px var(--main-color);
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    text-align: left !important;
+    width: 100%;
+    z-index: 2;
 }
 .timeline-content:hover{
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: 0 0 25px var(--main-color);
 }
 .timeline-content h3{
-    font-size: 20px;
-    color: white;
-    margin: 0 0 10px;
-    font-weight: 500;
+    font-size: 1.5rem;
+    color: #a0a0a0;
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
 }
-.timeline-content p{
+.project-bullets {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+    text-align: left;
+}
+.project-bullets li {
     color: white;
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 300;
-    line-height: 22px;
+    line-height: 2.4rem;
+    margin-bottom: 10px;
+    text-align: left;
 }
+.project-bullets li:last-child {
+    margin-bottom: 0;
+}
+/* ==========================================================================
+   EDITED TIMELINE CODE END
+   ========================================================================== */
+
 ::-webkit-scrollbar{
     width: 15px;
 }
@@ -388,7 +430,7 @@ span{
     align-items: baseline;
     padding: 5rem 5rem;
 }
-.skills-info h1 {
+.skills-box .skills-info h1 {
     font-size: 3rem; 
     font-weight: 800;  
     line-height: 2;  
@@ -480,18 +522,13 @@ span{
     justify-content: center;
     flex-wrap: wrap;
 }
-.contact form .input-box{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
 .contact form .input-box input,
 .contact form textarea{
     width: 100%;
     padding: 2.5rem;
     font-size: 1.8rem;
     color: var(--text-color);
-    background: var(--second-bg-color-bg-color);
+    background: var(--second-bg-color);
     border-radius: 2rem;
     border: 2px solid var(--main-color);
     margin: 1.5rem 0;
@@ -551,6 +588,7 @@ span{
     }
     .timeline-items::before{
         left: 7px;
+        transform: none;
     }
     .timeline-item:nth-child(odd){
         padding-right: 0;
@@ -562,6 +600,7 @@ span{
     }
     .timeline-dot{
         left: 0;
+        transform: none;
     }
     .skills{
         padding-bottom: 7rem;
