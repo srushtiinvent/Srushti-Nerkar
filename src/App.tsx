@@ -19,6 +19,7 @@ import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
 const queryClient = new QueryClient();
+const assetUrl = (asset: string) => `${import.meta.env.BASE_URL}${asset}`;
 
 const chapters = [
   { id: 'about', label: 'About', index: '01' },
@@ -154,7 +155,7 @@ function Home() {
               </button>
             ))}
             <span className="h-4 w-px bg-white/15" />
-            <a href="/Srushti_Nerkar_Resume.pdf" target="_blank" rel="noreferrer" className="mono text-[10px] uppercase tracking-[.14em] text-[#9baeb1] transition-colors hover:text-cyan focus-ring" data-testid="link-resume">Resume</a>
+            <a href={assetUrl('Srushti_Nerkar_Resume.pdf')} target="_blank" rel="noreferrer" className="mono text-[10px] uppercase tracking-[.14em] text-[#9baeb1] transition-colors hover:text-cyan focus-ring" data-testid="link-resume">Resume</a>
             <button onClick={cycleTheme} className="theme-toggle focus-ring" type="button" aria-label={`Switch to ${nextTheme.label} theme`} data-testid="button-theme-toggle">
               <span className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
               <span>{themeOptions[themeIndex]?.label ?? 'Dark'}</span>
@@ -169,7 +170,7 @@ function Home() {
             <motion.nav id="mobile-navigation" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: prefersReducedMotion ? 0 : .28 }} className="overflow-hidden border-t border-white/[.08] bg-[#071015] px-6 py-5 md:hidden" aria-label="Mobile navigation">
               <div className="flex flex-col gap-5">
                 {chapters.map((chapter) => <button key={chapter.id} onClick={() => jumpTo(chapter.id)} className={`mono text-left text-xs uppercase tracking-[.16em] ${activeChapter === chapter.id ? 'text-cyan' : 'text-[#a8bec0]'}`} aria-current={activeChapter === chapter.id ? 'page' : undefined} data-testid={`button-mobile-${chapter.id}`}>{chapter.index} / {chapter.label}</button>)}
-                <a href="/Srushti_Nerkar_Resume.pdf" target="_blank" rel="noreferrer" onClick={closeMenu} className="mono text-xs uppercase tracking-[.16em] text-[#a8bec0] hover:text-cyan focus-ring" data-testid="link-mobile-resume">Resume</a>
+                <a href={assetUrl('Srushti_Nerkar_Resume.pdf')} target="_blank" rel="noreferrer" onClick={closeMenu} className="mono text-xs uppercase tracking-[.16em] text-[#a8bec0] hover:text-cyan focus-ring" data-testid="link-mobile-resume">Resume</a>
                 <button onClick={cycleTheme} className="theme-toggle w-fit focus-ring" type="button" aria-label={`Switch to ${nextTheme.label} theme`} data-testid="button-mobile-theme-toggle">
                   <span className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
                   <span>{themeOptions[themeIndex]?.label ?? 'Dark'} theme</span>
@@ -211,7 +212,7 @@ function Home() {
             </div>
             <div className="relative mx-auto mt-5 w-full max-w-[410px] lg:mt-0 lg:justify-self-end">
               <div className="relative mx-auto aspect-[.82] w-[78%] overflow-visible rounded-[48%] portrait-frame">
-                <img src="/images/srushti-profile.jpg" alt="Srushti Nerkar" className="h-full w-full rounded-[48%] object-cover object-[center_28%] grayscale-[.12]" data-testid="img-profile" />
+                <img src={assetUrl('images/srushti-profile.jpg')} alt="Srushti Nerkar" className="h-full w-full rounded-[48%] object-cover object-[center_28%] grayscale-[.12]" data-testid="img-profile" />
                 <div className="absolute -right-16 top-[19%] hidden w-32 rotate-90 items-center gap-3 lg:flex"><span className="h-px w-10 bg-[#11dce0]" /><span className="mono whitespace-nowrap text-[9px] uppercase tracking-[.18em] text-[#739497]">01 / 04 — profile</span></div>
               </div>
               <motion.span className="hero-signal pointer-events-none absolute -right-2 top-[28%] hidden h-2 w-2 rounded-full bg-[#11dce0] lg:block" animate={prefersReducedMotion ? { opacity: .45 } : { opacity: [.25, 1, .25], scale: [1, 1.8, 1] }} transition={prefersReducedMotion ? { duration: 0 } : { duration: 2.8, repeat: Infinity, ease: 'easeInOut' }} aria-hidden="true" />
