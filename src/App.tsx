@@ -46,6 +46,7 @@ const reveal = {
 
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const [theme, setTheme] = useState<ThemeId>(() => {
     if (typeof window === 'undefined') return 'dark';
     const savedTheme = window.localStorage.getItem('srushti-theme');
@@ -94,6 +95,22 @@ function Home() {
   };
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setShowIntro(false);
+      return;
+    }
+    const timer = window.setTimeout(() => setShowIntro(false), 2400);
+    return () => window.clearTimeout(timer);
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    document.body.style.overflow = showIntro ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showIntro]);
+
+  useEffect(() => {
     window.localStorage.setItem('srushti-theme', theme);
   }, [theme]);
 
@@ -140,7 +157,51 @@ function Home() {
   }, [activeIndex, prefersReducedMotion]);
 
   return (
-    <div className={`site-shell theme-${theme} min-h-[100dvh]`}>
+    <>
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            key="intro"
+            className={`theme-${theme} fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6`}
+            style={{ background: 'var(--page-bg)' }}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.6, ease: 'easeInOut' } }}
+          >
+            <motion.span
+              className="mono text-[10px] uppercase tracking-[.4em] text-cyan"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Portfolio
+            </motion.span>
+            <div className="display flex items-center gap-3 text-4xl font-semibold tracking-tight lg:text-5xl" style={{ color: 'var(--ink)' }}>
+              <motion.span
+                initial={{ opacity: 0, y: 26 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Srushti
+              </motion.span>
+              <motion.span
+                className="text-cyan"
+                initial={{ opacity: 0, y: 26 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Nerkar
+              </motion.span>
+            </div>
+            <motion.div
+              className="cyan-line h-[2px]"
+              initial={{ width: 0 }}
+              animate={{ width: 140 }}
+              transition={{ duration: 0.9, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className={`site-shell theme-${theme} min-h-[100dvh]`}>
       <motion.div className="reading-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
       <header className="nav-glass fixed inset-x-0 top-0 z-30 border-b border-white/[.08]">
         <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-6 lg:px-10">
@@ -244,7 +305,8 @@ function Home() {
         <motion.section id="contact" className="chapter-section relative mx-auto max-w-[1240px] scroll-mt-24 px-6 py-28 lg:px-10 lg:py-40" initial="hidden" whileInView="visible" viewport={{ once: false, amount: .18 }} aria-labelledby="contact-title"><div className="absolute right-[12%] top-24 h-32 w-32 rounded-full border border-[#11dce0]/15" /><motion.div variants={reveal} className="relative max-w-[780px]"><p className="chapter-label mono mb-6 text-[10px] uppercase tracking-[.2em] text-cyan">05 — Contact</p><h2 id="contact-title" className="display text-[clamp(3.5rem,8vw,7.5rem)] font-medium leading-[.88] tracking-[-.07em] text-[#e7f2f2]">Have a hard<br /><span className="text-cyan">problem?</span></h2><p className="mt-9 max-w-[490px] text-lg leading-8 text-[#94abad]">I’m always curious about ambitious ideas, useful technology, and the people brave enough to begin.</p><a href="mailto:srushti.inventl@gmail.com" className="group mt-10 inline-flex items-center gap-4 border-b border-[#11dce0] pb-3 text-sm font-semibold text-[#e7f2f2] transition-colors hover:text-cyan focus-ring" data-testid="link-contact-email">srushti.inventl@gmail.com <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></a></motion.div></motion.section>
       </main>
       <footer className="border-t border-white/[.08]"><div className="mx-auto flex max-w-[1240px] flex-col gap-5 px-6 py-8 sm:flex-row sm:items-center sm:justify-between lg:px-10"><p className="display text-sm text-[#d5e4e4]">Srushti <span className="text-cyan">Nerkar</span></p><p className="mono text-[9px] uppercase tracking-[.16em] text-[#61797d]">Built with curiosity</p><button onClick={() => jumpTo('top')} className="flex items-center gap-2 text-[11px] uppercase tracking-[.12em] text-[#8da5a7] hover:text-cyan focus-ring" data-testid="button-back-top">Back to top <ArrowUpRight size={14} /></button></div></footer>
-    </div>
+      </div>
+    </>
   );
 }
 
