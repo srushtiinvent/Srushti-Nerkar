@@ -68,13 +68,13 @@ function Home() {
 
   const highlights = useMemo(() => [
     'Invited as speaker at TEDx MITAOE',
-    'Energising Bharat Award',
-    'Young Social Innovator Award at World CSR Day 2016 among 136 countries',
-    'Karmaveer Chakra Award',
-    "Speaker at Tomorrow's India Global Summit, 2017",
-    'International Women’s Day speaker with WTM and GDG Pune',
-    'Core team member of GDSC MNIT, Jaipur',
-    'Featured in United Nations film for Clean Water Issue',
+    'Top 3.89% on LeetCode with a max rating of 1977 (Global Rank 256 in Biweekly Contest 190)',
+    'Research Paper Submission at ICMLDE 2026',
+    'Codeforces Pupil (Max Rating 1399) (Global Rank 304 in Contest 1119 / Round highlights)',
+    'Finalist at Baker Hughes Hackathon 2025',
+    "International Women's Day speaker with WTM and GDG Pune",
+    'Core Team Member & Executive at GDSC MNIT',
+    '4 Granted Indian Patents',
   ], []);
   const skillGroups = useMemo(() => [
     { label: 'Intelligence', items: ['Machine Learning', 'Natural Language Processing', 'LLM Integration', 'RAG', 'Deep Learning'] },
@@ -267,15 +267,15 @@ function Home() {
 
       <main id="top">
         <section className="hero-chapter relative mx-auto flex min-h-[760px] max-w-[1240px] items-center px-6 pb-20 pt-36 lg:min-h-[820px] lg:px-10" aria-labelledby="hero-title">
-          <div className="grid-fade pointer-events-none absolute inset-x-0 top-0 h-[620px] opacity-70" />
+          <div className="grid-fade pointer-events-none absolute inset-x-0 top-0 h-[620px] opacity-85" />
           <motion.div className="hero-orbit pointer-events-none absolute right-[8%] top-[18%] hidden h-72 w-72 rounded-full border border-[#11dce0]/10 lg:block" animate={{ rotate: prefersReducedMotion ? 0 : 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} />
           <div className="relative z-10 grid w-full items-center gap-16 lg:grid-cols-[1.05fr_.95fr]">
             <div className="max-w-[650px]">
               <motion.div className="mb-8 flex items-center gap-3" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .7, delay: .1 }}>
-                <span className="h-px w-10 bg-[#11dce0]" /><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">Software developer · inventor · speaker</span>
+                <span className="h-px w-10 bg-[#11dce0]" /><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">SOFTWARE ENGINEER · 3X PATENT HOLDER</span>
               </motion.div>
-              <motion.h1 id="hero-title" className="display text-[clamp(4.2rem,10vw,8.8rem)] font-semibold leading-[.87] tracking-[-.075em] text-[#e8f2f2]" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .85, delay: .18 }}>Build<br /><span className="text-cyan">things</span><br /><em className="font-normal text-[#9db4b6]">that matter.</em></motion.h1>
-              <motion.p className="mt-9 max-w-[570px] text-[16px] leading-8 text-[#a8babc]" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .75, delay: .3 }}>I’m Srushti — a software developer who moves between deep technical systems and the people they’re built for. TEDx speaker, patent holder, lifelong learner.</motion.p>
+              <motion.h1 id="hero-title" className="display text-[clamp(4.2rem,10vw,8.8rem)] font-semibold leading-[.87] tracking-[-.075em] text-[#e8f2f2]" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .85, delay: .18 }}>Engineered<br /><span className="text-cyan">for</span><br /><em className="font-normal text-[#9db4b6]">impact.</em></motion.h1>
+              <motion.p className="mt-9 max-w-[570px] text-[16px] leading-8 text-[#a8babc]" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .75, delay: .3 }}>Scaling ideas into production-grade software. Crafting resilient distributed systems, data pipelines, and clean code designed to perform under pressure and backed by a relentless problem-solving edge.</motion.p>
               <motion.div className="mt-9 flex flex-wrap items-center gap-4" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .7, delay: .4 }}>
                 <button onClick={() => jumpTo('projects')} className="group flex items-center gap-3 bg-[#11dce0] px-5 py-3 text-xs font-bold uppercase tracking-[.13em] text-[#071015] transition-transform hover:-translate-y-1 focus-ring" data-testid="button-hero-projects">Explore my work <ArrowDownRight size={16} /></button>
                 <button onClick={() => jumpTo('contact')} className="group flex items-center gap-2 px-2 py-3 text-xs font-semibold uppercase tracking-[.13em] text-[#b8ccce] hover:text-cyan focus-ring" data-testid="button-hero-contact">Let's talk <MoveRight size={16} className="transition-transform group-hover:translate-x-1" /></button>
@@ -293,7 +293,7 @@ function Home() {
                 <div className="absolute -right-16 top-[19%] hidden w-32 rotate-90 items-center gap-3 lg:flex"><span className="h-px w-10 bg-[#11dce0]" /><span className="mono whitespace-nowrap text-[9px] uppercase tracking-[.18em] text-[#739497]">01 / 04 — profile</span></div>
               </div>
               <motion.span className="hero-signal pointer-events-none absolute -right-2 top-[28%] hidden h-2 w-2 rounded-full bg-[#11dce0] lg:block" animate={prefersReducedMotion ? { opacity: .45 } : { opacity: [.25, 1, .25], scale: [1, 1.8, 1] }} transition={prefersReducedMotion ? { duration: 0 } : { duration: 2.8, repeat: Infinity, ease: 'easeInOut' }} aria-hidden="true" />
-              <div className="thinking-card absolute -bottom-5 -left-2 px-4 py-3 backdrop-blur-md"><span className="mono block text-[9px] uppercase tracking-[.16em] text-[#739497]">Currently thinking about</span><span className="mt-1 block text-[12px] text-[#d4e4e5]">intelligence that serves people</span></div>
+              <div className="thinking-card absolute -bottom-5 -left-2 px-4 py-3 backdrop-blur-md"><span className="mono block text-[9px] uppercase tracking-[.16em] text-[#739497]">Crafting software that</span><span className="mt-1 block text-[12px] text-[#d4e4e5]">performs under pressure.</span></div>
             </div>
           </div>
           <button onClick={() => jumpTo('about')} className="absolute bottom-8 left-6 hidden items-center gap-3 focus-ring lg:flex" data-testid="button-scroll-about"><span className="mono text-[9px] uppercase tracking-[.18em] text-[#668084]">Scroll to explore</span><ChevronDown size={15} className="text-cyan" /></button>
@@ -301,8 +301,8 @@ function Home() {
 
         <motion.section id="about" className="chapter-section mx-auto max-w-[1240px] scroll-mt-24 px-6 py-28 lg:px-10 lg:py-36" initial="hidden" whileInView="visible" viewport={{ once: false, amount: .18 }} transition={{ staggerChildren: .09 }} aria-labelledby="about-title">
           <div className="grid gap-12 lg:grid-cols-[.65fr_1fr]">
-            <motion.div variants={reveal}><p className="chapter-label mono mb-5 text-[10px] uppercase tracking-[.2em] text-cyan">01 — About</p><h2 id="about-title" className="display max-w-[370px] text-4xl font-medium leading-[1.05] tracking-[-.04em] text-[#e7f2f2] lg:text-5xl">Technical depth.<br /><span className="text-[#7d999d]">Human intent.</span></h2></motion.div>
-            <motion.div variants={reveal} className="max-w-[650px]"><p className="text-xl leading-9 text-[#c0d1d2]">I develop exceptional products and deploy those in the community around me.</p><p className="mt-7 text-[15px] leading-8 text-[#82999c]">As a TEDx speaker and inventor granted three Indian patents, I enjoy the full arc of making: asking a sharper question, understanding the system underneath, and building something useful enough to leave the lab.</p><div className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-7 sm:grid-cols-3"><div><p className="display text-3xl text-cyan">03</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">Indian patents granted</p></div><div><p className="display text-3xl text-cyan">02</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">patents pending</p></div><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">community-minded practice</p></div></div></motion.div>
+            <motion.div variants={reveal}><p className="chapter-label mono mb-5 text-[10px] uppercase tracking-[.2em] text-cyan">01 — About</p><h2 id="about-title" className="display max-w-[370px] text-4xl font-medium leading-[1.05] tracking-[-.04em] text-[#e7f2f2] lg:text-5xl">Complex problems.<br /><span className="text-[#7d999d]">Clean execution.</span></h2></motion.div>
+            <motion.div variants={reveal} className="max-w-[650px]"><p className="text-xl leading-9 text-[#c0d1d2]">I build software at the intersection of deep technical logic and robust architecture. Whether scaling data pipelines or crafting resilient backend services, I turn hard problems into seamless code.</p><p className="mt-7 text-[15px] leading-8 text-[#82999c]">As a 3x patent holder and builder, my approach is simple: understand the core system, optimize every layer, and ship software that performs in the real world.</p><div className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-7 sm:grid-cols-3"><div><p className="display text-3xl text-cyan">04</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">Indian patents granted</p></div><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">RESEARCH PAPER</p></div><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">hackathon finalist</p></div></div></motion.div>
           </div>
         </motion.section>
 
