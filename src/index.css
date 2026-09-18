@@ -83,6 +83,15 @@ button { font: inherit; }
 ::selection { background: var(--accent); color: var(--page-bg); }
 .mono { font-family: var(--app-font-mono); }
 .display { font-family: 'Space Grotesk', sans-serif; }
+.pixel-image { position: relative; overflow: hidden; isolation: isolate; }
+.pixel-image-grid { position: absolute; inset: 0; }
+.pixel-image-piece { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+.pixel-image.is-visible .pixel-image-piece { animation: pixel-piece-in 1s cubic-bezier(.22, 1, .36, 1) both; }
+.pixel-image-tile { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; object-position: center 28%; transition: filter 1.35s cubic-bezier(.22, 1, .36, 1); will-change: filter; }
+.pixel-image-tile.is-grayscale { filter: grayscale(1); }
+@keyframes pixel-piece-in { from { opacity: 0; transform: scale(.985); } 65% { opacity: .92; transform: scale(1.003); } to { opacity: 1; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .pixel-image-piece { animation: none !important; opacity: 1; } .pixel-image-tile { transition: none; } }
+.site-shell { transition: background-color .28s ease, color .28s ease; }
 [class~="bg-[#071015]"],
 [class~="bg-[#0b1a20]"],
 [class~="bg-[#0b1c22]"] { background-color: #171719 !important; }

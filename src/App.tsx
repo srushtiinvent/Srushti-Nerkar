@@ -52,13 +52,17 @@ function Home() {
     const savedTheme = window.localStorage.getItem('srushti-theme');
     return savedTheme === 'light' || savedTheme === 'sunset' ? savedTheme : 'dark';
   });
+  const [themeTransition, setThemeTransition] = useState<ThemeId | null>(null);
   const [activeChapter, setActiveChapter] = useState<ChapterId>('about');
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const closeMenu = () => setMenuOpen(false);
   const themeIndex = themeOptions.findIndex((option) => option.id === theme);
   const nextTheme = themeOptions[(themeIndex + 1) % themeOptions.length];
-  const cycleTheme = () => setTheme(nextTheme.id);
+  const cycleTheme = () => {
+    setTheme(nextTheme.id);
+    setThemeTransition(nextTheme.id);
+  };
   const activeIndex = Math.max(0, chapters.findIndex((chapter) => chapter.id === activeChapter));
   const activeChapterData = chapters[activeIndex] ?? chapters[0];
 
@@ -202,6 +206,18 @@ function Home() {
         )}
       </AnimatePresence>
       <div className={`site-shell theme-${theme} min-h-[100dvh]`}>
+      <AnimatePresence initial={false}>
+        {themeTransition && <motion.div
+          key={themeTransition}
+          className="theme-transition pointer-events-none fixed right-8 top-8 z-[60] h-10 w-10 rounded-full"
+          initial={{ opacity: .5, scale: 0 }}
+          animate={{ opacity: 0, scale: prefersReducedMotion ? 1 : 18 }}
+          transition={{ duration: prefersReducedMotion ? 0 : .42, ease: [0.16, 1, 0.3, 1] }}
+          style={{ background: 'var(--accent)' }}
+          onAnimationComplete={() => setThemeTransition(null)}
+          aria-hidden="true"
+        />}
+      </AnimatePresence>
       <motion.div className="reading-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
       <header className="nav-glass fixed inset-x-0 top-0 z-30 border-b border-white/[.08]">
         <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-6 lg:px-10">
@@ -218,8 +234,8 @@ function Home() {
             <span className="h-4 w-px bg-white/15" />
             <a href={assetUrl('Srushti_Nerkar_Resume.pdf')} target="_blank" rel="noreferrer" className="mono text-[10px] uppercase tracking-[.14em] text-[#9baeb1] transition-colors hover:text-cyan focus-ring" data-testid="link-resume">Resume</a>
             <button onClick={cycleTheme} className="theme-toggle focus-ring" type="button" aria-label={`Switch to ${nextTheme.label} theme`} data-testid="button-theme-toggle">
-              <span className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
-              <span>{themeOptions[themeIndex]?.label ?? 'Dark'}</span>
+              <motion.span key={theme} initial={{ scale: .35, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
+              <motion.span key={`label-${theme}`} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22 }}>{themeOptions[themeIndex]?.label ?? 'Dark'}</motion.span>
             </button>
           </nav>
           <button className="focus-ring text-[#cce0e2] md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} data-testid="button-mobile-menu">
@@ -233,8 +249,8 @@ function Home() {
                 {chapters.map((chapter) => <button key={chapter.id} onClick={() => jumpTo(chapter.id)} className={`mono text-left text-xs uppercase tracking-[.16em] ${activeChapter === chapter.id ? 'text-cyan' : 'text-[#a8bec0]'}`} aria-current={activeChapter === chapter.id ? 'page' : undefined} data-testid={`button-mobile-${chapter.id}`}>{chapter.index} / {chapter.label}</button>)}
                 <a href={assetUrl('Srushti_Nerkar_Resume.pdf')} target="_blank" rel="noreferrer" onClick={closeMenu} className="mono text-xs uppercase tracking-[.16em] text-[#a8bec0] hover:text-cyan focus-ring" data-testid="link-mobile-resume">Resume</a>
                 <button onClick={cycleTheme} className="theme-toggle w-fit focus-ring" type="button" aria-label={`Switch to ${nextTheme.label} theme`} data-testid="button-mobile-theme-toggle">
-                  <span className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
-                  <span>{themeOptions[themeIndex]?.label ?? 'Dark'} theme</span>
+                  <motion.span key={`mobile-swatch-${theme}`} initial={{ scale: .35, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
+                  <motion.span key={`mobile-label-${theme}`} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22 }}>{themeOptions[themeIndex]?.label ?? 'Dark'} theme</motion.span>
                 </button>
               </div>
             </motion.nav>
