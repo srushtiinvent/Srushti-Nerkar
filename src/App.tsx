@@ -70,7 +70,7 @@ function Home() {
     'Invited as speaker at TEDx MITAOE',
     'Top 3.89% on LeetCode with a max rating of 1977 (Global Rank 256 in Biweekly Contest 190)',
     'Research Paper Submission at ICMLDE 2026',
-    'Codeforces Pupil (Max Rating 1399) (Global Rank 304 in Contest 1119 / Round highlights)',
+    'Codeforces Pupil (Max Rating 1391) (Global Rank 304 in Contest 1119 Div 3)',
     'Finalist at Baker Hughes Hackathon 2025',
     "International Women's Day speaker with WTM and GDG Pune",
     'Core Team Member & Executive at GDSC MNIT',
