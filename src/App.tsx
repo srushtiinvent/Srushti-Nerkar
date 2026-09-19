@@ -67,14 +67,14 @@ function Home() {
   const activeChapterData = chapters[activeIndex] ?? chapters[0];
 
   const highlights = useMemo(() => [
-    'Invited as speaker at TEDx MITAOE',
-    'Top 3.89% on LeetCode with a max rating of 1977 (Global Rank 256 in Biweekly Contest 190)',
-    'Research Paper Submission at ICMLDE 2026',
-    'Codeforces Pupil (Max Rating 1391) (Global Rank 304 in Contest 1119 Div 3)',
-    'Finalist at Baker Hughes Hackathon 2025',
-    "International Women's Day speaker with WTM and GDG Pune",
-    'Core Team Member & Executive at GDSC MNIT',
-    '4 Granted Indian Patents',
+    { text: 'Invited as speaker at TEDx MITAOE', url: 'https://www.youtube.com/watch?v=Mv2EraAPgdc' },
+    { text: 'Top 3.89% on LeetCode with a max rating of 1977 (Global Rank 256 in Biweekly Contest 190)', url: 'https://leetcode.com/u/Srushti_1004/' },
+    { text: 'Research Paper Submission at ICMLDE 2026' },
+    { text: 'Codeforces Pupil (Max Rating 1399) (Global Rank 304 in Contest 1119 / Round highlights)', url: 'https://codeforces.com/profile/srushti_2910' },
+    { text: 'Finalist at Baker Hughes Hackathon 2025', url: 'https://github.com/srushtiinvent/Smart-Sentry' },
+    { text: "International Women's Day speaker with WTM and GDG Pune", url: 'https://drive.google.com/file/d/1oJb2xyFkgrPzHtE-w8_ulxUZeCF_IDA6/view?usp=sharing' },
+    { text: 'Core Team Member & Executive at GDSC MNIT' },
+    { text: '4 Granted Indian Patents' },
   ], []);
   const skillGroups = useMemo(() => [
     { label: 'Intelligence', items: ['Machine Learning', 'Natural Language Processing', 'LLM Integration', 'RAG', 'Deep Learning'] },
@@ -307,7 +307,7 @@ function Home() {
         </motion.section>
 
         <motion.section id="highlights" className="chapter-section relative border-y border-white/[.08] bg-[#09171c] scroll-mt-24" initial="hidden" whileInView="visible" viewport={{ once: false, amount: .12 }} transition={{ staggerChildren: .06 }} aria-labelledby="highlights-title">
-          <div className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10 lg:py-36"><div className="mb-14 flex flex-wrap items-end justify-between gap-6"><motion.div variants={reveal}><p className="chapter-label mono mb-5 text-[10px] uppercase tracking-[.2em] text-cyan">02 — Highlights</p><h2 id="highlights-title" className="display text-4xl font-medium tracking-[-.04em] text-[#e7f2f2] lg:text-6xl">A record of showing up.</h2></motion.div><motion.p variants={reveal} className="max-w-[260px] text-sm leading-6 text-[#789094]">The rooms, communities, and causes that have shaped my point of view.</motion.p></div><div className="grid border-t border-white/10 md:grid-cols-2">{highlights.map((item, i) => <motion.div variants={reveal} key={item} className="group flex min-h-[92px] items-start gap-5 border-b border-white/10 py-6 md:odd:border-r md:odd:pr-10 md:even:pl-10" data-testid={`highlight-${i + 1}`}><span className="mono pt-1 text-[10px] text-cyan/70">0{i + 1}</span><p className="max-w-[400px] text-[15px] leading-6 text-[#b9cacc] transition-colors group-hover:text-[#eff8f8]">{item}</p><ArrowUpRight size={15} className="ml-auto shrink-0 text-[#557174] transition-colors group-hover:text-cyan" /></motion.div>)}</div></div>
+          <div className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10 lg:py-36"><div className="mb-14 flex flex-wrap items-end justify-between gap-6"><motion.div variants={reveal}><p className="chapter-label mono mb-5 text-[10px] uppercase tracking-[.2em] text-cyan">02 — Highlights</p><h2 id="highlights-title" className="display text-4xl font-medium tracking-[-.04em] text-[#e7f2f2] lg:text-6xl">A record of showing up.</h2></motion.div><motion.p variants={reveal} className="max-w-[260px] text-sm leading-6 text-[#789094]">The rooms, communities, and causes that have shaped my point of view.</motion.p></div><div className="grid border-t border-white/10 md:grid-cols-2">{highlights.map((item, i) => <motion.div variants={reveal} key={item.text} className="group flex min-h-[92px] items-start gap-5 border-b border-white/10 py-6 md:odd:border-r md:odd:pr-10 md:even:pl-10" data-testid={`highlight-${i + 1}`}><span className="mono pt-1 text-[10px] text-cyan/70">0{i + 1}</span>{item.url ? <a href={item.url} target="_blank" rel="noreferrer" className="max-w-[400px] text-[15px] leading-6 text-[#b9cacc] transition-colors group-hover:text-[#eff8f8]">{item.text}</a> : <p className="max-w-[400px] text-[15px] leading-6 text-[#b9cacc] transition-colors group-hover:text-[#eff8f8]">{item.text}</p>}<ArrowUpRight size={15} className="ml-auto shrink-0 text-[#557174] transition-colors group-hover:text-cyan" /></motion.div>)}</div></div>
         </motion.section>
 
         <motion.section id="skills" className="chapter-section mx-auto max-w-[1240px] scroll-mt-24 px-6 py-28 lg:px-10 lg:py-36" initial="hidden" whileInView="visible" viewport={{ once: false, amount: .15 }} transition={{ staggerChildren: .08 }} aria-labelledby="skills-title">
