@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion, useScroll } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -53,6 +53,8 @@ function Home() {
     return savedTheme === 'light' || savedTheme === 'sunset' ? savedTheme : 'dark';
   });
   const [themeTransition, setThemeTransition] = useState<ThemeId | null>(null);
+  const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
+  const resumeMenuRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState<ChapterId>('about');
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
@@ -88,6 +90,15 @@ function Home() {
     { number: '03', name: 'ThumbCraft AI', kicker: 'Creative tooling for YouTube', description: 'A full-stack thumbnail studio with prompt optimization, image synthesis, MongoDB history, and a Cloudinary CDN pipeline.', stack: 'React · Node.js · MongoDB · Gemini · OpenAI', stat: 'FULL', statLabel: 'stack product', accent: 'cyan', url: 'https://github.com/srushtiinvent/ai-thumbnail' },
     { number: '04', name: 'Aspect-Based Sentiment Analysis', kicker: 'Language, with context', description: 'A hybrid ABSA approach combining BERT, rule-based heuristics, Contrastive Clause Resolution, and context windows.', stack: 'Python · BERT · PyTorch · NLP · spaCy', stat: '92.1%', statLabel: 'accuracy', accent: 'warm', url: 'https://github.com/srushtiinvent/Aspect-based-sentiment-analysis' },
   ], []);
+  const resumeVariants = useMemo(() => {
+    const base = assetUrl('Srushti_Nerkar_Resume.pdf');
+    return [
+      { id: 'Software Engineer', label: 'Software Engineer', url: base },
+      { id: 'Full-Stack Engineer', label: 'Full-Stack Engineer', url: base },
+      { id: 'Backend & Systems', label: 'Backend & Systems', url: base },
+      { id: 'AI & ML Engineer', label: 'AI & ML Engineer', url: base },
+    ];
+  }, []);
 
   const jumpTo = (id: ChapterId | 'top') => {
     closeMenu();
@@ -113,6 +124,17 @@ function Home() {
       document.body.style.overflow = '';
     };
   }, [showIntro]);
+
+  useEffect(() => {
+    if (!resumeMenuOpen) return;
+    const handleClick = (event: MouseEvent) => {
+      if (resumeMenuRef.current && !resumeMenuRef.current.contains(event.target as Node)) {
+        setResumeMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [resumeMenuOpen]);
 
   useEffect(() => {
     window.localStorage.setItem('srushti-theme', theme);
@@ -232,7 +254,21 @@ function Home() {
               </button>
             ))}
             <span className="h-4 w-px bg-white/15" />
-            <a href={assetUrl('Srushti_Nerkar_Resume.pdf')} target="_blank" rel="noreferrer" className="mono text-[10px] uppercase tracking-[.14em] text-[#9baeb1] transition-colors hover:text-cyan focus-ring" data-testid="link-resume">Resume</a>
+            <div className="relative" ref={resumeMenuRef}>
+              <button onClick={() => setResumeMenuOpen((v) => !v)} className="mono flex items-center gap-1.5 text-[10px] uppercase tracking-[.14em] text-[#9baeb1] transition-colors hover:text-cyan focus-ring" aria-expanded={resumeMenuOpen} aria-haspopup="true" type="button" data-testid="button-resume">
+                Resume
+                <ChevronDown size={11} className={`transition-transform ${resumeMenuOpen ? 'rotate-180 text-cyan' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {resumeMenuOpen && (
+                  <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }} className="absolute right-0 top-[calc(100%+14px)] w-56 border border-[#1b343a] bg-[#0b1c22] py-2 shadow-xl">
+                    {resumeVariants.map((variant) => (
+                      <a key={variant.id} href={variant.url} target="_blank" rel="noreferrer" onClick={() => setResumeMenuOpen(false)} className="mono block px-4 py-2.5 text-[10px] uppercase tracking-[.12em] text-[#9baeb1] transition-colors hover:bg-white/5 hover:text-cyan" data-testid={`link-resume-${variant.id}`}>{variant.label}</a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <button onClick={cycleTheme} className="theme-toggle focus-ring" type="button" aria-label={`Switch to ${nextTheme.label} theme`} data-testid="button-theme-toggle">
               <motion.span key={theme} initial={{ scale: .35, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
               <motion.span key={`label-${theme}`} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22 }}>{themeOptions[themeIndex]?.label ?? 'Dark'}</motion.span>
@@ -247,7 +283,7 @@ function Home() {
             <motion.nav id="mobile-navigation" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: prefersReducedMotion ? 0 : .28 }} className="overflow-hidden border-t border-white/[.08] bg-[#071015] px-6 py-5 md:hidden" aria-label="Mobile navigation">
               <div className="flex flex-col gap-5">
                 {chapters.map((chapter) => <button key={chapter.id} onClick={() => jumpTo(chapter.id)} className={`mono text-left text-xs uppercase tracking-[.16em] ${activeChapter === chapter.id ? 'text-cyan' : 'text-[#a8bec0]'}`} aria-current={activeChapter === chapter.id ? 'page' : undefined} data-testid={`button-mobile-${chapter.id}`}>{chapter.index} / {chapter.label}</button>)}
-                <a href={assetUrl('Srushti_Nerkar_Resume.pdf')} target="_blank" rel="noreferrer" onClick={closeMenu} className="mono text-xs uppercase tracking-[.16em] text-[#a8bec0] hover:text-cyan focus-ring" data-testid="link-mobile-resume">Resume</a>
+                <div className="flex flex-col gap-3"><span className="mono text-xs uppercase tracking-[.16em] text-[#a8bec0]">Resume</span><div className="ml-3 flex flex-col gap-3 border-l border-white/10 pl-4">{resumeVariants.map((variant) => <a key={variant.id} href={variant.url} target="_blank" rel="noreferrer" onClick={closeMenu} className="mono text-[11px] uppercase tracking-[.14em] text-[#789094] hover:text-cyan focus-ring" data-testid={`link-mobile-resume-${variant.id}`}>{variant.label}</a>)}</div></div>
                 <button onClick={cycleTheme} className="theme-toggle w-fit focus-ring" type="button" aria-label={`Switch to ${nextTheme.label} theme`} data-testid="button-mobile-theme-toggle">
                   <motion.span key={`mobile-swatch-${theme}`} initial={{ scale: .35, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} className={`theme-swatch theme-swatch-${theme}`} aria-hidden="true" />
                   <motion.span key={`mobile-label-${theme}`} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22 }}>{themeOptions[themeIndex]?.label ?? 'Dark'} theme</motion.span>
