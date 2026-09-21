@@ -308,7 +308,7 @@ function Home() {
           <div className="relative z-10 grid w-full items-center gap-16 lg:grid-cols-[1.05fr_.95fr]">
             <div className="max-w-[650px]">
               <motion.div className="mb-8 flex items-center gap-3" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .7, delay: .1 }}>
-                <span className="h-px w-10 bg-[#11dce0]" /><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">SOFTWARE ENGINEER · 3X PATENT HOLDER</span>
+                <span className="h-px w-10 bg-[#11dce0]" /><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">SOFTWARE ENGINEER · 4X PATENT HOLDER</span>
               </motion.div>
               <motion.h1 id="hero-title" className="display text-[clamp(4.2rem,10vw,8.8rem)] font-semibold leading-[.87] tracking-[-.075em] text-[#e8f2f2]" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .85, delay: .18 }}>Engineered<br /><span className="text-cyan">for</span><br /><em className="font-normal text-[#9db4b6]">impact.</em></motion.h1>
               <motion.p className="mt-9 max-w-[570px] text-[16px] leading-8 text-[#a8babc]" initial={reveal.hidden} animate={reveal.visible} transition={{ duration: .75, delay: .3 }}>Scaling ideas into production-grade software. Crafting resilient distributed systems, data pipelines, and clean code designed to perform under pressure and backed by a relentless problem-solving edge.</motion.p>
