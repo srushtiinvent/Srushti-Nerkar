@@ -70,9 +70,9 @@ function Home() {
 
   const highlights = useMemo(() => [
     { text: 'Invited as speaker at TEDx MITAOE', url: 'https://www.youtube.com/watch?v=Mv2EraAPgdc' },
-    { text: 'Top 3.89% on LeetCode with a max rating of 1977 (Global Rank 256 in Biweekly Contest 190)', url: 'https://leetcode.com/u/Srushti_1004/' },
+    { text: 'Top 2.98% on LeetCode with a max rating of 1977 (Global Rank 256 in Biweekly Contest 190)', url: 'https://leetcode.com/u/Srushti_1004/' },
     { text: 'Research Paper Submission at ICMLDE 2026' },
-    { text: 'Codeforces Pupil (Max Rating 1399) (Global Rank 304 in Contest 1119 / Round highlights)', url: 'https://codeforces.com/profile/srushti_2910' },
+    { text: 'Codeforces Pupil (Max Rating 1391) (Global Rank 304 in Contest 1119 / Round highlights)', url: 'https://codeforces.com/profile/srushti_2910' },
     { text: 'Finalist at Baker Hughes Hackathon 2025', url: 'https://github.com/srushtiinvent/Smart-Sentry' },
     { text: "International Women's Day speaker with WTM and GDG Pune", url: 'https://drive.google.com/file/d/1oJb2xyFkgrPzHtE-w8_ulxUZeCF_IDA6/view?usp=sharing' },
     { text: 'Core Team Member & Executive at GDSC MNIT' },
