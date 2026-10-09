@@ -72,7 +72,7 @@ function Home() {
     { text: 'Invited as speaker at TEDx MITAOE', url: 'https://www.youtube.com/watch?v=Mv2EraAPgdc' },
     { text: 'Top 1.57% on LeetCode with a max rating of 2101 (Global Rank 256 in Biweekly Contest 190)', url: 'https://leetcode.com/u/Srushti_1004/' },
     { text: 'Research Paper Submission at ICMLDE 2026' },
-    { text: 'CodeChef 3-Star (Max Rating 1652) (Global Rank 180 in Starters 257 / Round highlights)', url: 'https://www.codechef.com/users/srushti_2501' },
+    { text: 'CodeChef 3-Star (Max Rating 1652) (Global Rank 180 in Starters 257)', url: 'https://www.codechef.com/users/srushti_2501' },
     { text: 'Finalist at Baker Hughes Hackathon 2025', url: 'https://github.com/srushtiinvent/Smart-Sentry' },
     { text: "International Women's Day speaker with WTM and GDG Pune", url: 'https://drive.google.com/file/d/1oJb2xyFkgrPzHtE-w8_ulxUZeCF_IDA6/view?usp=sharing' },
     { text: 'Core Team Member & Executive at GDSC MNIT' },
