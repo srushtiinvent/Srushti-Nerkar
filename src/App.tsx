@@ -327,7 +327,7 @@ function Home() {
             </div>
             <motion.div className="hero-portrait relative mx-auto mt-5 w-full max-w-[410px] lg:mt-0 lg:justify-self-end" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}>
               <div className="relative mx-auto aspect-[.82] w-[78%] overflow-visible rounded-[48%] portrait-frame">
-                <img src={assetUrl('images/srushti-profile.jpg')} alt="Srushti Nerkar" className="h-full w-full rounded-[48%] object-cover object-[center_28%] grayscale-[.12]" data-testid="img-profile" />
+                <img src={assetUrl('images/port_profile.PNG')} alt="Srushti Nerkar" className="h-full w-full rounded-[48%] object-cover object-[center_28%] grayscale-[.12]" data-testid="img-profile" />
                 <div className="absolute -right-16 top-[19%] hidden w-32 rotate-90 items-center gap-3 lg:flex"><span className="h-px w-10 bg-[#11dce0]" /><span className="mono whitespace-nowrap text-[9px] uppercase tracking-[.18em] text-[#739497]">01 / 04 — profile</span></div>
               </div>
               <motion.span className="hero-signal pointer-events-none absolute -right-2 top-[28%] hidden h-2 w-2 rounded-full bg-[#11dce0] lg:block" animate={prefersReducedMotion ? { opacity: .45 } : { opacity: [.25, 1, .25], scale: [1, 1.8, 1] }} transition={prefersReducedMotion ? { duration: 0 } : { duration: 2.8, repeat: Infinity, ease: 'easeInOut' }} aria-hidden="true" />
