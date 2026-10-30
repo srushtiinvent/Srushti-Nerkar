@@ -331,6 +331,16 @@ button { font: inherit; }
 /* Chapters land flush at the top of the screen: cancel html scroll-padding so no part of the previous section shows */
 .chapter-snap { scroll-margin-top: -92px; }
 .contact-chapter::before, #contact::before { display: none; }
+/* Logo hover: clearly clickable */
+.logo-mark { transition: background-color .25s ease, color .25s ease, transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease; }
+.logo-btn:hover .logo-mark, .logo-btn:focus-visible .logo-mark { background: var(--accent); color: var(--page-bg); transform: translateY(-3px); box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 35%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 45%, transparent); }
+.logo-btn:active .logo-mark { transform: translateY(0) scale(.94); box-shadow: none; }
+.logo-name { transition: letter-spacing .25s ease, opacity .25s ease; }
+.logo-btn:hover .logo-name { letter-spacing: .01em; }
+.logo-tip { opacity: 0; transform: translateY(-4px); transition: opacity .2s ease, transform .2s ease; }
+.logo-btn:hover .logo-tip, .logo-btn:focus-visible .logo-tip { opacity: 1; transform: translateY(0); }
+.theme-light .logo-tip { background: #F9EFEE !important; border-color: rgba(60,48,73,.18) !important; }
+.theme-sunset .logo-tip { background: #857C91 !important; border-color: rgba(248,204,170,.24) !important; }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
 @keyframes orbit-breathe { 0%,100% { transform: scale(1) rotate(0deg); opacity: .65; } 50% { transform: scale(1.06) rotate(8deg); opacity: 1; } }
 @media (max-width: 767px) {

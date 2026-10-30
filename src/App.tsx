@@ -85,10 +85,12 @@ function Home() {
     { label: 'Data systems', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Docker'] },
   ], []);
   const projects = useMemo(() => [
-    { number: '01', name: 'PRISM', kicker: 'Network intrusion detection', description: 'A hierarchical detection system that brings together an Isolation Forest pre-filter, a 3-layer Parametric LIF Spiking Neural Network, and a stacked ensemble.', stack: 'Python · PyTorch · Scikit-learn · SNN', stat: '95.59%', statLabel: 'accuracy', accent: 'cyan' },
-    { number: '02', name: 'Smart Sentry', kicker: 'Streaming anomaly intelligence', description: 'Phase-aware anomaly detection built for live streams, with Kafka ingestion and Redis real-time state management at its core.', stack: 'Python · Kafka · Redis · PostgreSQL · Docker', stat: '0.71', statLabel: 'anomaly F1', accent: 'warm', url: 'https://github.com/srushtiinvent/Smart-Sentry' },
-    { number: '03', name: 'ThumbCraft AI', kicker: 'Creative tooling for YouTube', description: 'A full-stack thumbnail studio with prompt optimization, image synthesis, MongoDB history, and a Cloudinary CDN pipeline.', stack: 'React · Node.js · MongoDB · Gemini · OpenAI', stat: 'FULL', statLabel: 'stack product', accent: 'cyan', url: 'https://github.com/srushtiinvent/ai-thumbnail' },
-    { number: '04', name: 'Aspect-Based Sentiment Analysis', kicker: 'Language, with context', description: 'A hybrid ABSA approach combining BERT, rule-based heuristics, Contrastive Clause Resolution, and context windows.', stack: 'Python · BERT · PyTorch · NLP · spaCy', stat: '92.1%', statLabel: 'accuracy', accent: 'warm', url: 'https://github.com/srushtiinvent/Aspect-based-sentiment-analysis' },
+    { number: '01', name: 'TraceFlow', kicker: 'Code, drawn as it runs', description: 'A live C++ visualiser that turns any code into an interactive flowchart as you type, with an animated step-through view, side-by-side comparison of two solutions, and shareable links with image export.', stack: 'React · TypeScript · Monaco · React Flow · Tree-sitter', stat: 'LIVE', statLabel: 'on github pages', accent: 'cyan', url: 'https://srushtiinvent.github.io/traceflow/'},
+    { number: '02', name: 'Job Watcher', kicker: 'Fresher jobs, filtered for you', description: 'A full-stack tracker that watches company job feeds, filters for fresher roles by experience level and location, and emails alerts, with an Applied tracker and Google sign-in.', stack: 'React · Node.js · PostgreSQL · Clerk · Nodemailer', stat: 'LIVE', statLabel: 'full-stack product', accent: 'warm', url: 'https://job-watcher-cphi.onrender.com/' },
+    { number: '03', name: 'PRISM', kicker: 'Network intrusion detection', description: 'A hierarchical detection system that brings together an Isolation Forest pre-filter, a 3-layer Parametric LIF Spiking Neural Network, and a stacked ensemble.', stack: 'Python · PyTorch · Scikit-learn · SNN', stat: '95.59%', statLabel: 'accuracy', accent: 'cyan' },
+    { number: '04', name: 'Smart Sentry', kicker: 'Streaming anomaly intelligence', description: 'Phase-aware anomaly detection built for live streams, with Kafka ingestion and Redis real-time state management at its core.', stack: 'Python · Kafka · Redis · PostgreSQL · Docker', stat: '0.71', statLabel: 'anomaly F1', accent: 'warm', url: 'https://github.com/srushtiinvent/Smart-Sentry' },
+    { number: '05', name: 'ThumbCraft AI', kicker: 'Creative tooling for YouTube', description: 'A full-stack thumbnail studio with prompt optimization, image synthesis, MongoDB history, and a Cloudinary CDN pipeline.', stack: 'React · Node.js · MongoDB · Gemini · OpenAI', stat: 'FULL', statLabel: 'stack product', accent: 'cyan', url: 'https://github.com/srushtiinvent/ai-thumbnail' },
+    { number: '06', name: 'Aspect-Based Sentiment Analysis', kicker: 'Language, with context', description: 'A hybrid ABSA approach combining BERT, rule-based heuristics, Contrastive Clause Resolution, and context windows.', stack: 'Python · BERT · PyTorch · NLP · spaCy', stat: '92.1%', statLabel: 'accuracy', accent: 'warm', url: 'https://github.com/srushtiinvent/Aspect-based-sentiment-analysis' },
   ], []);
   const resumeVariants = useMemo(() => {
     const base = assetUrl('Srushti_Nerkar_Resume.pdf');
@@ -102,9 +104,15 @@ function Home() {
 
   const jumpTo = (id: ChapterId | 'top') => {
     closeMenu();
+    if (id === 'top') {
+      window.history.replaceState(null, '', window.location.pathname);
+      setActiveChapter('about');
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      return;
+    }
     const target = document.getElementById(id);
     if (target) {
-      window.history.replaceState(null, '', id === 'top' ? `${window.location.pathname}` : `#${id}`);
+      window.history.replaceState(null, '', `#${id}`);
       target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     }
   };
@@ -243,9 +251,10 @@ function Home() {
       <motion.div className="reading-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
       <motion.header className="nav-glass fixed inset-x-0 top-0 z-30 border-b border-white/[.08]" initial={{ opacity: 0, y: -28 }} animate={showIntro ? { opacity: 0, y: -28 } : { opacity: 1, y: 0 }} transition={{ duration: .6, ease: [0.16, 1, 0.3, 1] }}>
         <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-6 lg:px-10">
-          <button onClick={() => jumpTo('top')} className="group flex items-center gap-3 text-left focus-ring" data-testid="button-logo">
-            <span className="flex h-9 w-9 items-center justify-center border border-[#11dce0]/60 text-sm font-bold text-cyan">SN</span>
-            <span className="display text-[15px] font-semibold tracking-tight text-[#ecf4f4]">Srushti <span className="text-cyan">Nerkar</span></span>
+          <button onClick={() => jumpTo('top')} className="logo-btn group relative flex cursor-pointer items-center gap-3 text-left focus-ring" aria-label="Back to home" data-testid="button-logo">
+            <span className="logo-mark flex h-9 w-9 items-center justify-center border border-[#11dce0]/60 text-sm font-bold text-cyan">SN</span>
+            <span className="logo-name display text-[15px] font-semibold tracking-tight text-[#ecf4f4]">Srushti <span className="text-cyan">Nerkar</span></span>
+            <span className="logo-tip mono pointer-events-none absolute left-0 top-[calc(100%+10px)] whitespace-nowrap border border-white/10 bg-[#0b1c22] px-2 py-1 text-[9px] uppercase tracking-[.14em] text-[#9baeb1]" aria-hidden="true">↑ Back to home</span>
           </button>
           <nav className="hidden items-center gap-7 md:flex" aria-label="Primary navigation">
             {chapters.map((chapter) => (
