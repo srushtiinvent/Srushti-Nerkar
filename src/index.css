@@ -326,17 +326,17 @@ button { font: inherit; }
 .theme-sunset .project-card:hover { border-color: color-mix(in srgb, var(--accent) 80%, transparent) !important; background-color: color-mix(in srgb, var(--accent) 8%, transparent) !important; }
 .theme-sunset .skill-pill:hover { color: var(--accent) !important; border-color: color-mix(in srgb, var(--accent) 55%, transparent) !important; background: color-mix(in srgb, var(--accent) 6%, transparent) !important; }
 /* Hero fits one screen: title scales with viewport height too */
-.hero-title { font-size: clamp(3.4rem, min(10vw, 13.5vh), 8.8rem); line-height: .87; letter-spacing: -.075em; color: #e8f2f2; }
+.hero-title { font-size: clamp(3.4rem, min(10vw, 13.5vh), 8.8rem); line-height: .87; letter-spacing: -.075em; }
 .hero-portrait > div:first-child { width: min(78%, 42vh); }
-/* Contact: cancel html scroll-padding so the section starts at the very top of the screen */
-.contact-chapter { scroll-margin-top: -92px; }
-.contact-chapter::before { display: none; }
+/* Chapters land flush at the top of the screen: cancel html scroll-padding so no part of the previous section shows */
+.chapter-snap { scroll-margin-top: -92px; }
+.contact-chapter::before, #contact::before { display: none; }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
 @keyframes orbit-breathe { 0%,100% { transform: scale(1) rotate(0deg); opacity: .65; } 50% { transform: scale(1.06) rotate(8deg); opacity: 1; } }
 @media (max-width: 767px) {
   html { scroll-padding-top: 82px; }
   .chapter-section::before { left: 1.5rem; height: 28px; }
-  .contact-chapter { scroll-margin-top: -82px; }
+  .chapter-snap { scroll-margin-top: -82px; }
   .hero-portrait > div:first-child { width: 78%; }
   .portrait-frame::after { inset: -9px; }
 }
