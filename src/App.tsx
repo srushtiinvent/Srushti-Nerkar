@@ -68,14 +68,22 @@ function PatentPicker({ children, testId, viewPlacement = 'inline', leadingRule 
     { id: 'patent-03', label: 'LIFE SAVER', file: 'patents/Life saver - Saftey Device in Two Wheeler to Save of User in Accidents.pdf' },
     { id: 'patent-04', label: 'SAFETY HELMET', file: 'patents/Saftey Helmet for Vehicular Saftey.pdf' },
   ];
+  const viewButton = (
+    <button type="button" onClick={(event) => { event.stopPropagation(); setOpen((value) => !value); }} className={`hidden whitespace-nowrap text-left mono text-[9px] uppercase tracking-[.12em] text-[#789ba0] transition-opacity sm:inline-flex ${hovered ? 'sm:opacity-100' : 'sm:opacity-0'} focus-visible:opacity-100 hover:text-cyan focus-visible:text-cyan ${viewPlacement === 'below' ? 'mt-1' : ''}`} tabIndex={0}>
+      View patents <span aria-hidden="true" className="ml-1 text-cyan">↗</span>
+    </button>
+  );
   return (
-    <div className={`group/patents inline-flex ${viewPlacement === 'inline' ? 'items-center gap-3' : 'flex-col items-start'} ${leadingRule ? '-translate-y-1.5' : ''}`} ref={rootRef} onPointerEnter={() => setHovered(true)} onPointerLeave={() => { setHovered(false); setOpen(false); }}>
-      {leadingRule && <span className="h-px w-10 shrink-0 bg-[#11dce0]" aria-hidden="true" />}
-      <button type="button" onClick={() => setOpen((value) => !value)} className="focus-ring" aria-expanded={open} aria-haspopup="true" data-testid={testId}>{children}</button>
-      <button type="button" onClick={(event) => { event.stopPropagation(); setOpen((value) => !value); }} className={`whitespace-nowrap text-left mono text-[9px] uppercase tracking-[.12em] text-[#789ba0] transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'} focus-visible:opacity-100 hover:text-cyan focus-visible:text-cyan ${viewPlacement === 'below' ? 'mt-1' : ''}`} tabIndex={0}>View patents <span aria-hidden="true" className="ml-1 text-cyan">↗</span></button>
+    <div className={`group/patents inline-flex flex-col items-start ${leadingRule ? '-translate-y-1.5' : ''}`} ref={rootRef} onPointerEnter={() => setHovered(true)} onPointerLeave={(event) => { setHovered(false); if (event.pointerType !== 'touch') setOpen(false); }}>
+      <div className={`flex items-center ${leadingRule || viewPlacement === 'inline' ? 'gap-3' : ''}`}>
+        {leadingRule && <span className="h-px w-10 shrink-0 cursor-pointer bg-[#11dce0]" aria-hidden="true" onClick={() => setOpen((value) => !value)} />}
+        <button type="button" onClick={() => setOpen((value) => !value)} className="focus-ring" aria-expanded={open} aria-haspopup="true" data-testid={testId}>{children}</button>
+        {viewPlacement === 'inline' && viewButton}
+      </div>
+      {viewPlacement === 'below' && viewButton}
       <AnimatePresence>
-        {open && <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: .2 }} className="mt-2 overflow-hidden border-l border-cyan/30 pl-3">
-          {patents.map((patent) => <a key={patent.id} href={assetUrl(patent.file)} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="mono block py-1.5 text-[9px] uppercase tracking-[.1em] text-[#9baeb1] transition-colors hover:text-cyan" data-testid={`link-${patent.id}`}>{patent.label} <span aria-hidden="true" className="text-cyan">↗</span></a>)}
+        {open && <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: .2 }} className="mt-2 w-max max-w-[calc(100vw-3rem)] overflow-hidden border-l border-cyan/30 pl-3">
+          {patents.map((patent) => <a key={patent.id} href={assetUrl(patent.file)} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="flex w-max max-w-full items-center gap-2 whitespace-nowrap py-1.5 mono text-[9px] uppercase tracking-[.1em] text-[#9baeb1] transition-colors hover:text-cyan" data-testid={`link-${patent.id}`}><span>{patent.label}</span><span aria-hidden="true" className="shrink-0 text-cyan">↗</span></a>)}
         </motion.div>}
       </AnimatePresence>
     </div>
@@ -362,7 +370,7 @@ function Home() {
           <div className="relative z-10 grid w-full items-center gap-10 lg:gap-16 lg:grid-cols-[1.05fr_.95fr]">
             <div className="max-w-[650px]">
               <motion.div className="mb-0 flex items-center gap-3 lg:mb-0" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .7, delay: 0.60 }}>
-                <PatentPicker testId="button-patent-holder" leadingRule><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">SOFTWARE ENGINEER · 4X PATENT HOLDER</span></PatentPicker>
+                <PatentPicker testId="button-patent-holder" leadingRule><span className="whitespace-nowrap mono text-[8px] uppercase tracking-[.1em] text-cyan sm:text-[10px] sm:tracking-[.24em]">SOFTWARE ENGINEER · 4X PATENT HOLDER</span></PatentPicker>
               </motion.div>
               <motion.h1 id="hero-title" className="display hero-title font-semibold leading-[.87] tracking-[-.075em] text-[#e8f2f2]" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .85, delay: 0.68 }}>Engineered<br /><span className="text-cyan">for</span><br /><em className="font-normal text-[#9db4b6]">impact.</em></motion.h1>
               <motion.p className="mt-6 max-w-[570px] text-[15px] leading-7 text-[#a8babc] lg:mt-[clamp(1rem,3.5vh,2.25rem)] lg:text-[16px] lg:leading-8" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .75, delay: 0.80 }}>Scaling ideas into production-grade software. Crafting resilient distributed systems, data pipelines, and clean code designed to perform under pressure and backed by a relentless problem-solving edge.</motion.p>
