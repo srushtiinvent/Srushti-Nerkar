@@ -45,6 +45,43 @@ const reveal = {
   visible: { opacity: 1, y: 0 },
 };
 
+function PatentPicker({ children, testId, viewPlacement = 'inline', leadingRule = false }: { children: ReactNode; testId: string; viewPlacement?: 'inline' | 'below'; leadingRule?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+  const patents = [
+    { id: 'patent-01', label: 'WATER CONSERVATIVE SHOWER', file: 'patents/water conservative shower.pdf' },
+    { id: 'patent-02', label: 'AUDITO', file: 'patents/Audito Low Cost Hearing Aid for Deaf Persons.pdf' },
+    { id: 'patent-03', label: 'LIFE SAVER', file: 'patents/Life saver - Saftey Device in Two Wheeler to Save of User in Accidents.pdf' },
+    { id: 'patent-04', label: 'SAFETY HELMET', file: 'patents/Saftey Helmet for Vehicular Saftey.pdf' },
+  ];
+  return (
+    <div className={`group/patents inline-flex ${viewPlacement === 'inline' ? 'items-center gap-3' : 'flex-col items-start'} ${leadingRule ? '-translate-y-1.5' : ''}`} ref={rootRef} onPointerEnter={() => setHovered(true)} onPointerLeave={() => { setHovered(false); setOpen(false); }}>
+      {leadingRule && <span className="h-px w-10 shrink-0 bg-[#11dce0]" aria-hidden="true" />}
+      <button type="button" onClick={() => setOpen((value) => !value)} className="focus-ring" aria-expanded={open} aria-haspopup="true" data-testid={testId}>{children}</button>
+      <button type="button" onClick={(event) => { event.stopPropagation(); setOpen((value) => !value); }} className={`whitespace-nowrap text-left mono text-[9px] uppercase tracking-[.12em] text-[#789ba0] transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'} focus-visible:opacity-100 hover:text-cyan focus-visible:text-cyan ${viewPlacement === 'below' ? 'mt-1' : ''}`} tabIndex={0}>View patents <span aria-hidden="true" className="ml-1 text-cyan">↗</span></button>
+      <AnimatePresence>
+        {open && <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: .2 }} className="mt-2 overflow-hidden border-l border-cyan/30 pl-3">
+          {patents.map((patent) => <a key={patent.id} href={assetUrl(patent.file)} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="mono block py-1.5 text-[9px] uppercase tracking-[.1em] text-[#9baeb1] transition-colors hover:text-cyan" data-testid={`link-${patent.id}`}>{patent.label} <span aria-hidden="true" className="text-cyan">↗</span></a>)}
+        </motion.div>}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
@@ -185,7 +222,7 @@ function Home() {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeMenu();
+      if (event.key === 'Escape') { closeMenu(); setResumeMenuOpen(false); }
       if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp' && event.key !== 'PageDown' && event.key !== 'PageUp') return;
       const target = event.target as HTMLElement;
       if (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return;
@@ -324,8 +361,8 @@ function Home() {
           <motion.div className="hero-orbit pointer-events-none absolute right-[8%] top-[18%] hidden h-72 w-72 rounded-full border border-[#11dce0]/10 lg:block" animate={{ rotate: prefersReducedMotion ? 0 : 360 }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} />
           <div className="relative z-10 grid w-full items-center gap-10 lg:gap-16 lg:grid-cols-[1.05fr_.95fr]">
             <div className="max-w-[650px]">
-              <motion.div className="mb-5 flex items-center gap-3 lg:mb-[clamp(1rem,3vh,2rem)]" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .7, delay: 0.60 }}>
-                <span className="h-px w-10 bg-[#11dce0]" /><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">SOFTWARE ENGINEER · 4X PATENT HOLDER</span>
+              <motion.div className="mb-0 flex items-center gap-3 lg:mb-0" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .7, delay: 0.60 }}>
+                <PatentPicker testId="button-patent-holder" leadingRule><span className="mono text-[10px] uppercase tracking-[.24em] text-cyan">SOFTWARE ENGINEER · 4X PATENT HOLDER</span></PatentPicker>
               </motion.div>
               <motion.h1 id="hero-title" className="display hero-title font-semibold leading-[.87] tracking-[-.075em] text-[#e8f2f2]" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .85, delay: 0.68 }}>Engineered<br /><span className="text-cyan">for</span><br /><em className="font-normal text-[#9db4b6]">impact.</em></motion.h1>
               <motion.p className="mt-6 max-w-[570px] text-[15px] leading-7 text-[#a8babc] lg:mt-[clamp(1rem,3.5vh,2.25rem)] lg:text-[16px] lg:leading-8" initial={reveal.hidden} animate={showIntro ? reveal.hidden : reveal.visible} transition={{ duration: .75, delay: 0.80 }}>Scaling ideas into production-grade software. Crafting resilient distributed systems, data pipelines, and clean code designed to perform under pressure and backed by a relentless problem-solving edge.</motion.p>
@@ -355,7 +392,7 @@ function Home() {
         <motion.section id="about" className="chapter-section mx-auto max-w-[1240px] chapter-snap px-6 py-28 lg:px-10 lg:py-36" initial="hidden" whileInView="visible" viewport={{ once: false, amount: .18 }} transition={{ staggerChildren: .09 }} aria-labelledby="about-title">
           <div className="grid gap-12 lg:grid-cols-[.65fr_1fr]">
             <motion.div variants={reveal}><p className="chapter-label mono mb-5 text-[10px] uppercase tracking-[.2em] text-cyan">01 — About</p><h2 id="about-title" className="display max-w-[370px] text-4xl font-medium leading-[1.05] tracking-[-.04em] text-[#e7f2f2] lg:text-5xl">Complex problems.<br /><span className="text-[#7d999d]">Clean execution.</span></h2></motion.div>
-            <motion.div variants={reveal} className="max-w-[650px]"><p className="text-xl leading-9 text-[#c0d1d2]">I build software at the intersection of deep technical logic and robust architecture. Whether scaling data pipelines or crafting resilient backend services, I turn hard problems into seamless code.</p><p className="mt-7 text-[15px] leading-8 text-[#82999c]">As a 4x patent holder and builder, my approach is simple: understand the core system, optimize every layer, and ship software that performs in the real world.</p><div className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-7 sm:grid-cols-3"><div><p className="display text-3xl text-cyan">04</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">Indian patents granted</p></div><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">RESEARCH PAPER</p></div><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">hackathon finalist</p></div></div></motion.div>
+            <motion.div variants={reveal} className="max-w-[650px]"><p className="text-xl leading-9 text-[#c0d1d2]">I build software at the intersection of deep technical logic and robust architecture. Whether scaling data pipelines or crafting resilient backend services, I turn hard problems into seamless code.</p><p className="mt-7 text-[15px] leading-8 text-[#82999c]">As a 4x patent holder and builder, my approach is simple: understand the core system, optimize every layer, and ship software that performs in the real world.</p><div className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-7 sm:grid-cols-3"><PatentPicker testId="button-patent-count" viewPlacement="below"><span className="block whitespace-nowrap text-left"><span className="display block text-3xl text-cyan">04</span><span className="mono mt-2 block whitespace-nowrap text-[9px] uppercase tracking-[.13em] text-[#789195]">Indian patents granted</span></span></PatentPicker><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">RESEARCH PAPER</p></div><div><p className="display text-3xl text-cyan">01</p><p className="mono mt-2 text-[9px] uppercase tracking-[.13em] text-[#789195]">hackathon finalist</p></div></div></motion.div>
           </div>
         </motion.section>
 
