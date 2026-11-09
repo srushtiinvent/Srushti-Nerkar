@@ -48,6 +48,7 @@ export default defineConfig({
       : []),
   ],
   resolve: {
+    conditions: ['style', 'module', 'browser', 'development|production'],
     alias: {
       '@': path.resolve(import.meta.dirname, 'src'),
       '@assets': path.resolve(
