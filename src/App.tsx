@@ -116,7 +116,7 @@ function Home() {
 
   const highlights = useMemo(() => [
     { text: 'Invited as speaker at TEDx MITAOE', url: 'https://www.youtube.com/watch?v=Mv2EraAPgdc' },
-    { text: 'Top 0.93% on LeetCode with a max rating of 2199 (Global Rank 140 in Biweekly Contest 193)', url: 'https://leetcode.com/u/Srushti_1004/' },
+    { text: 'Top 0.74% on LeetCode with a max rating of 2241 (Global Rank 120 in Biweekly Contest 196)', url: 'https://leetcode.com/u/Srushti_1004/' },
     { text: 'Research Paper Accepted at ICMLDE 2026' },
     { text: 'CodeChef 3-Star (Max Rating 1725) (Global Rank 180 in Starters 257)', url: 'https://www.codechef.com/users/srushti_2501' },
     { text: 'Finalist at Baker Hughes Hackathon 2025', url: 'https://github.com/srushtiinvent/Smart-Sentry' },
